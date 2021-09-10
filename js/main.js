@@ -22,7 +22,7 @@ function render() {
   for (const list of showList) {
     console.log(list);
     console.log(list.show.name);
-    html += `<li class= "js-container-film" id= "${list.show.id}">`;
+    html += `<li class= "js-container-film " id= "${list.show.id}">`;
     html += `<h3 class="js-film-name">${list.show.name}</h3>`;
     if (list.show.image === null) {
       html += `<img class= "js-film-image" src= "https://via.placeholder.com/210x295/ffffff/666666/?text=TV">`;
@@ -55,13 +55,14 @@ function handleFavoriteShow(ev) {
   console.log(showFavorites);
   for (const eachShowFavorite of showFavorites) {
     /* htmlForfavorites += `<li class= "js-favorite-film">${eachShowFavorite.show.name}</li>`;*/
-    htmlForfavorites += `<li class= "js-container-film" id= "${eachShowFavorite.show.id}">`;
-    htmlForfavorites += `<h3 class="js-film-name js-film-name-favorite">${eachShowFavorite.show.name}</h3>`;
+    htmlForfavorites += `<li class= "js-favourite-shows" id= "${eachShowFavorite.show.id}">`;
+
     if (eachShowFavorite.show.image === null) {
-      htmlForfavorites += `<img class= "js-film-image" src= "https://via.placeholder.com/210x295/ffffff/666666/?text=TV">`;
+      htmlForfavorites += `<img class= "js-film-image js-favourite-shows" src= "https://via.placeholder.com/210x295/ffffff/666666/?text=TV">`;
     } else {
-      htmlForfavorites += `<img class = "js-film-image js-favourite-shows " src= "${eachShowFavorite.show.image.original}"></li>`;
+      htmlForfavorites += `<img class = "js-film-image js-favourite-shows " src= "${eachShowFavorite.show.image.original}">`;
     }
+    htmlForfavorites += `<h4 class="js-film-name js-film-name-favorite js-favourite-shows">${eachShowFavorite.show.name}</h4></li>`;
   }
   favoritesShows.innerHTML = htmlForfavorites;
 }
