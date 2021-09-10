@@ -1,0 +1,25 @@
+.js-list-show-container {
+}
+
+.js-container-film {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.js-film-image {
+  width: 200px;
+  height: 350px;
+}
+
+.js-film-name {
+  color: coral;
+}
+
+.js-favourite-shows {
+  width: 25px;
+  height: 50px;
+}
+.js-film-name-favorite {
+  color: black;
+}
