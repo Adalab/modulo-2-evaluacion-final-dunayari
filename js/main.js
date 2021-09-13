@@ -43,9 +43,6 @@ function handleListenerLi() {
 }
 
 function handleFavoriteShow(ev) {
-  console.log("HOLAAAA");
-  console.log(ev.currentTarget.id);
-
   const allShows = event.currentTarget;
   allShows.classList.toggle("js-favorite");
 
@@ -65,6 +62,7 @@ function handleFavoriteShow(ev) {
   } else {
     showFavorites.splice(favoriteFound, 1);
   }
+  setInLocalStorage();
 
   let htmlForfavorites = "";
   console.log(showFavorites);
@@ -84,10 +82,33 @@ function handleFavoriteShow(ev) {
 
 searchButton.addEventListener("click", handleButtonSearch);
 
+function getFromLocalStorage() {
+  const savedFavorites = localStorage.getItem("showListData");
+  if (savedFavorites === null) {
+    showFavorites = [];
+  } else {
+    showFavorites = JSON.parse(savedFavorites);
+    let htmlForfavorites = "";
+    console.log(showFavorites);
+    for (const eachShowFavorite of showFavorites) {
+      htmlForfavorites += `<li class= "js-favourite-shows" id= "${eachShowFavorite.show.id}">`;
+
+      if (eachShowFavorite.show.image === null) {
+        htmlForfavorites += `<img class= "js-film-image js-favourite-shows" src= "https://via.placeholder.com/210x295/ffffff/666666/?text=TV">`;
+      } else {
+        htmlForfavorites += `<img class = "js-film-image js-favourite-shows " src= "${eachShowFavorite.show.image.original}">`;
+
+        htmlForfavorites += `<h4 class="js-film-name js-film-name-favorite js-favourite-shows">${eachShowFavorite.show.name}</h4></li>`;
+      }
+    }
+    favoritesShows.innerHTML = htmlForfavorites;
+  }
+}
+getFromLocalStorage();
 // Añadimos la informacion al local storage
 function setInLocalStorage() {
   // stringify me permite transformar a string el array de palettes
-  const stringShowList = JSON.stringify(showList);
+  const stringShowList = JSON.stringify(showFavorites);
   //añadimos  al localStorage  los datos convertidos en string previamente
   localStorage.setItem("showListData", stringShowList);
 }
@@ -97,9 +118,6 @@ function getFromApi() {
     .then((response) => response.json())
     .then((data) => {
       showList = data.showList;
-      // pintamos los datos que nos  da la API
-      setInLocalStorage();
-      // los datos que me ha dado la API  los guardamos en el loscalStorage
     });
 }
 
@@ -118,7 +136,6 @@ function getLocalStorage() {
     const arrayShowList = JSON.parse(localStorageShowList);
     // lo guardo en la variable global de palettes
     showList = arrayShowList;
-    // cada vez que modifico los arrays de palettes o de favorites vuelvo a pintar y a escuchar eventos
   }
 }
 // 1- start app -- Cuando carga la pagina
