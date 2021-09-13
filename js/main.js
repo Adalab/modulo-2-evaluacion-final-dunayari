@@ -43,28 +43,83 @@ function handleListenerLi() {
 }
 
 function handleFavoriteShow(ev) {
-  console.log("Hola");
+  console.log("HOLAAAA");
+  console.log(ev.currentTarget.id);
+
+  const allShows = event.currentTarget;
+  allShows.classList.toggle("js-favorite");
 
   const selectedShow = parseInt(ev.currentTarget.id);
 
   const objetClicked = showList.find((allLi) => {
     return allLi.show.id === selectedShow;
   });
-  showFavorites.push(objetClicked);
+  console.log(objetClicked);
+
+  const favoriteFound = showFavorites.findIndex((fav) => {
+    return fav.show.id === selectedShow;
+  });
+  console.log(favoriteFound);
+  if (favoriteFound === -1) {
+    showFavorites.push(objetClicked);
+  } else {
+    showFavorites.splice(favoriteFound, 1);
+  }
+
   let htmlForfavorites = "";
   console.log(showFavorites);
   for (const eachShowFavorite of showFavorites) {
-    /* htmlForfavorites += `<li class= "js-favorite-film">${eachShowFavorite.show.name}</li>`;*/
     htmlForfavorites += `<li class= "js-favourite-shows" id= "${eachShowFavorite.show.id}">`;
 
     if (eachShowFavorite.show.image === null) {
       htmlForfavorites += `<img class= "js-film-image js-favourite-shows" src= "https://via.placeholder.com/210x295/ffffff/666666/?text=TV">`;
     } else {
       htmlForfavorites += `<img class = "js-film-image js-favourite-shows " src= "${eachShowFavorite.show.image.original}">`;
+
+      htmlForfavorites += `<h4 class="js-film-name js-film-name-favorite js-favourite-shows">${eachShowFavorite.show.name}</h4></li>`;
     }
-    htmlForfavorites += `<h4 class="js-film-name js-film-name-favorite js-favourite-shows">${eachShowFavorite.show.name}</h4></li>`;
   }
   favoritesShows.innerHTML = htmlForfavorites;
 }
 
 searchButton.addEventListener("click", handleButtonSearch);
+
+// Añadimos la informacion al local storage
+function setInLocalStorage() {
+  // stringify me permite transformar a string el array de palettes
+  const stringShowList = JSON.stringify(showList);
+  //añadimos  al localStorage  los datos convertidos en string previamente
+  localStorage.setItem("showListData", stringShowList);
+}
+//esta funcion me permite  gacer una peticion  al servidor
+function getFromApi() {
+  fetch("//api.tvmaze.com/search/shows?q=")
+    .then((response) => response.json())
+    .then((data) => {
+      showList = data.showList;
+      // pintamos los datos que nos  da la API
+      setInLocalStorage();
+      // los datos que me ha dado la API  los guardamos en el loscalStorage
+    });
+}
+
+// esta funcion  nos permite buscar en el localStorage si hay informacion guardada
+// para no hacer peticion al servidor cada vez que cargue la pagina
+function getLocalStorage() {
+  // obtenermos lo que hay en el LS
+  const localStorageShowList = localStorage.getItem("showListData");
+  // siempre que cojo datos del local storage tengo que comprobar si son válidos
+  // es decir si es la primera vez que entro en la página
+  if (localStorageShowList === null) {
+    // no tengo datos en el local storage, así que llamo al API
+    getFromApi();
+  } else {
+    // sí tengo datos en el local storage, así lo parseo a un array y
+    const arrayShowList = JSON.parse(localStorageShowList);
+    // lo guardo en la variable global de palettes
+    showList = arrayShowList;
+    // cada vez que modifico los arrays de palettes o de favorites vuelvo a pintar y a escuchar eventos
+  }
+}
+// 1- start app -- Cuando carga la pagina
+getLocalStorage();

@@ -21,19 +21,13 @@ body {
   margin-bottom: 20px;
   margin-right: 5px;
   border: 10px solid green;
+  color: rgb(146, 56, 23);
+  list-style: none;
 }
 
 .js-film-image {
   width: 200px;
   height: 350px;
-}
-.js-change-style {
-  color: green;
-  border: coral;
-}
-
-.js-film-name {
-  color: rgb(146, 56, 23);
 }
 
 .js-favourite-shows {
@@ -44,9 +38,13 @@ body {
   margin-bottom: 10px;
 }
 .js-film-name-favorite {
-  color: black;
   font-size: small;
   display: flex;
   align-items: flex-end;
   margin-left: 5px;
+}
+
+.js-favorite {
+  border: 10px solid rgb(146, 56, 23);
+  color: green;
 }
