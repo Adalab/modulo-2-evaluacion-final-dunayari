@@ -7,7 +7,7 @@ PASOS PARA HACER EL EJERCICIO:
 [x]Por cada show contenido en el resultado de búsqueda de la API, pintar una tarjeta (con innerHTML) donde mostrar una imagen de la serie y el título.
 [x]Para las series que no tienen imagen, crear una imagen de relleno.
 [x]Hacer los favoritos:
-[]css con color de fondo y de fuente intercambiados.
-[]pintar un array en la parte izquierda de la pantalla, debajo del formulario de búsqueda con las series favoritas.
-[]ponerlo de manera que no se borren aunque la usuaria realice otra búsqueda.
-[]Almacenar en localStorage
+[x]css con color de fondo y de fuente intercambiados.
+[x]pintar un array en la parte izquierda de la pantalla, debajo del formulario de búsqueda con las series favoritas.
+[x]ponerlo de manera que no se borren aunque la usuaria realice otra búsqueda.
+[x]Almacenar en localStorage
